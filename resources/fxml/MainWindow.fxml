@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
 <BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.MainWindow">
+            xmlns:fx="http://javafx.com/fxml">
     <center>
-        <ListView/>
+        <ListView fx:id="pantryLV"/>
     </center>
+    <bottom>
+        <HBox>
+            <Button onAction="#clickAddPasta" text="Add"/>
+            <Button onAction="#clickRemovePasta" text="Remove"/>
+        </HBox>
+    </bottom>
     <right>
         <VBox>
             <HBox>
-                <Label text="name: "/>
-                <TextField fx:id="nameTF"/>
+                <Label text="Average weight per pasta: "/>
+                <TextField fx:id="avgWeightTF"/>
             </HBox>
         </VBox>
     </right>
