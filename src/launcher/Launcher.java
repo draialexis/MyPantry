@@ -37,7 +37,7 @@ public class Launcher extends Application {
         try {
             viewmodel.save();
         } catch (IOException ex) {
-            new Alert(Alert.AlertType.ERROR, "could not save : " + ex.getMessage() ,ButtonType.OK).setHeaderText(null);
+            new Alert(Alert.AlertType.ERROR, "could not save : " + ex.getMessage(), ButtonType.OK).setHeaderText(null);
         }
 
         super.stop();

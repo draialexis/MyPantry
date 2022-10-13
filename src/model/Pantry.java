@@ -2,18 +2,19 @@ package model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Pantry {
+public class Pantry implements Serializable {
 
     public static final String PROP_PANTRY_ADD = "model.pantry.addPasta";
     public static final String PROP_PANTRY_RMV = "model.pantry.removePasta";
 
     private transient PropertyChangeSupport support;
 
-    public PropertyChangeSupport getSupport() {
+    private PropertyChangeSupport getSupport() {
         if (support == null) {
             support = new PropertyChangeSupport(this);
         }
@@ -42,10 +43,11 @@ public class Pantry {
             System.err.println("cannot add null to Pantry.pasta");
         }
         else {
-            this.pasta.add(toAdd);
+            int index = 0;
+            this.pasta.add(index, toAdd);
             getSupport().fireIndexedPropertyChange(PROP_PANTRY_ADD,
-                                                   0,
-                                                   getPasta().size() >= 2 ? getPasta().get(1) : null,
+                                                   index,
+                                                   getPasta().size() > index + 1 ? getPasta().get(index + 1) : null,
                                                    toAdd);
         }
     }
@@ -55,13 +57,13 @@ public class Pantry {
             System.err.println("cannot remove null from Pantry.pasta");
         }
         else {
-            int rmvIdx = getPasta().indexOf(toRemove);
-            if (rmvIdx >= 0) {
+            int index = getPasta().indexOf(toRemove);
+            if (index >= 0) {
                 this.pasta.remove(toRemove);
                 getSupport().fireIndexedPropertyChange(PROP_PANTRY_RMV,
-                                                       rmvIdx,
+                                                       index,
                                                        toRemove,
-                                                       getPasta().size() >= rmvIdx + 1 ? getPasta().get(rmvIdx) : null);
+                                                       getPasta().size() >= index + 1 ? getPasta().get(index) : null);
             }
         }
     }

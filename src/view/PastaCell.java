@@ -7,9 +7,9 @@ import viewmodel.PastaVM;
 
 public class PastaCell extends ListCell<PastaVM> {
 
-    private final BorderPane bp = new BorderPane();
-    private final Label avgWeithtPer = new Label();
-    private final Label type = new Label();
+    private final BorderPane pane = new BorderPane();
+    private final Label avgWeithtPerLbl = new Label();
+    private final Label typeLbl = new Label();
 
     @Override
     protected void updateItem(PastaVM item, boolean empty) {
@@ -18,17 +18,17 @@ public class PastaCell extends ListCell<PastaVM> {
         if (!empty) {
 
             switch (item.getClass().getSimpleName()) {
-                case "PastaVM" -> type.setText("pasta");
-                case "FarfalleVM" -> type.setText("farfalle");
-                case "PenneVM" -> type.setText("penne");
-                default -> type.setText("unknown");
+                case "PastaVM" -> typeLbl.setText("pasta");
+                case "FarfalleVM" -> typeLbl.setText("farfalle");
+                case "PenneVM" -> typeLbl.setText("penne");
+                default -> typeLbl.setText("unknown");
             }
 
-            avgWeithtPer.textProperty().bind(item.avgWeightPerProperty().asString());
+            avgWeithtPerLbl.textProperty().bind(item.avgWeightPerProperty().asString());
 
-            bp.setLeft(type);
-            bp.setRight(avgWeithtPer);
-            setGraphic(bp);
+            pane.setLeft(typeLbl);
+            pane.setRight(avgWeithtPerLbl);
+            setGraphic(pane);
         }
         else {
             setGraphic(null);

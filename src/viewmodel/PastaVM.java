@@ -4,7 +4,10 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import model.Pasta;
 
-public class PastaVM {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public class PastaVM implements PropertyChangeListener {
     private final Pasta model;
 
     private final DoubleProperty avgWeightPer = new SimpleDoubleProperty();
@@ -12,27 +15,35 @@ public class PastaVM {
     public DoubleProperty avgWeightPerProperty() {return avgWeightPer;}
     public void setAvgWeightPer(double avgWeightPer) {this.avgWeightPer.set(avgWeightPer);}
 
-    public PastaVM(Pasta p) {
+    public PastaVM(Object obj) {
         // loads model
-        model = p;
-        setAvgWeightPer(p.getAvgWeightPer());
+        if(obj instanceof Pasta) {
+            model = (Pasta) obj;
+        } else {
+            model = new Pasta(0.0);
+        }
+        setAvgWeightPer(model.getAvgWeightPer());
 
         // subscribes to model
-//        model.addListener(this);
+        model.addListener(this);
 
         // promises to update model
         avgWeightPer.addListener((__, ___, newV) -> model.setAvgWeightPer(newV.doubleValue()));
     }
 
-    public PastaVM(double avgWeightPer) {
-        this(new Pasta(avgWeightPer));
-    }
-
-    public PastaVM() {
-        this(0.0);
-    }
-
     public Pasta getModel() {
         return model;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + ": " + this.getAvgWeightPer();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if(evt.getPropertyName().equals(Pasta.PROP_PASTA_AVGWEIGHTPER)) {
+            setAvgWeightPer((Double) evt.getNewValue());
+        }
     }
 }

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
+import model.Pasta;
 import viewmodel.PantryVM;
 import viewmodel.PastaVM;
 
@@ -18,7 +19,7 @@ public class MainWindow {
 
     @FXML
     private void clickAddPasta() {
-        viewmodel.addPasta(new PastaVM());
+        viewmodel.addPasta(new PastaVM(new Pasta()));
     }
 
     @FXML

@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Pantry;
-import model.Pasta;
 
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
@@ -36,6 +35,7 @@ public class PantryVM implements PropertyChangeListener {
 
         } catch (IOException e) {
 
+            e.printStackTrace();
             loader = new Stub();
 
             try{
@@ -60,28 +60,36 @@ public class PantryVM implements PropertyChangeListener {
     }
 
     public void save() throws IOException {
-        Saver.getInstance().save(model);
+        Saver.getInstance().save(getModel());
     }
 
     public void removePasta(PastaVM toRemove) {
-        model.removePasta(toRemove.getModel());
+        getModel().removePasta(toRemove.getModel());
     }
 
     public void addPasta(PastaVM toAdd) {
-        model.addPasta(toAdd.getModel());
+        getModel().addPasta(toAdd.getModel());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if(evt.getPropertyName().equals(Pantry.PROP_PANTRY_ADD)) {
-            pastaObs.add(
-                    ((IndexedPropertyChangeEvent) evt).getIndex(),
-                         new PastaVM((Pasta) evt.getNewValue())
-            );
+
+            int index = ((IndexedPropertyChangeEvent) evt).getIndex();
+            PastaVM toAdd = new PastaVM(evt.getNewValue());
+
+            pastaObs.add(index, toAdd);
         }
         if(evt.getPropertyName().equals(Pantry.PROP_PANTRY_RMV)) {
-            pastaObs.remove(((IndexedPropertyChangeEvent) evt).getIndex());
+
+            int index = ((IndexedPropertyChangeEvent) evt).getIndex();
+
+            pastaObs.remove(index);
         }
 
+    }
+
+    public Pantry getModel() {
+        return model;
     }
 }
