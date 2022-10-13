@@ -20,7 +20,7 @@ public class PastaVM implements PropertyChangeListener {
         if(obj instanceof Pasta) {
             model = (Pasta) obj;
         } else {
-            model = new Pasta(0.0);
+            model = new Pasta();
         }
         setAvgWeightPer(model.getAvgWeightPer());
 
@@ -31,13 +31,12 @@ public class PastaVM implements PropertyChangeListener {
         avgWeightPer.addListener((__, ___, newV) -> model.setAvgWeightPer(newV.doubleValue()));
     }
 
-    public Pasta getModel() {
-        return model;
+    public PastaVM() {
+        this(null);
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName() + ": " + this.getAvgWeightPer();
+    public Pasta getModel() {
+        return model;
     }
 
     @Override

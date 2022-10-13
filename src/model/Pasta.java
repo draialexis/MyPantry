@@ -37,11 +37,6 @@ public class Pasta implements Serializable {
         AvgWeightPer = avgWeightPer;
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName() + ": " + this.getAvgWeightPer();
-    }
-
     public void addListener(PropertyChangeListener listener) {
         getSupport().addPropertyChangeListener(listener);
     }
